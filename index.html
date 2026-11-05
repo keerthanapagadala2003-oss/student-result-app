@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Result Calculator</title>
+<style>
+body {
+  font-family: Arial;
+  background: #edf2f7;
+  padding: 20px;
+}
+.container {
+  max-width: 400px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+}
+h2 { text-align: center; color: #315b9b; }
+input {
+  width: 95%;
+  padding: 10px;
+  margin: 7px 0;
+  box-sizing: border-box;
+}
+button {
+  width: 100%;
+  padding: 12px;
+  background: #315b9b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  margin-top: 12px;
+  font-size: 16px;
+}
+#result {
+  margin-top: 18px;
+  padding: 12px;
+  background: #edf2f7;
+  border-radius: 8px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Student Result Calculator</h2>
+
+<input id="name" placeholder="Student Name">
+
+<input id="m1" type="number" placeholder="English Marks (out of 100)" min="0" max="100">
+<input id="m2" type="number" placeholder="Maths Marks (out of 100)" min="0" max="100">
+<input id="m3" type="number" placeholder="Science Marks (out of 100)" min="0" max="100">
+<input id="m4" type="number" placeholder="Computer Marks (out of 100)" min="0" max="100">
+<input id="m5" type="number" placeholder="Social Marks (out of 100)" min="0" max="100">
+
+<button onclick="calculate()">Calculate Result</button>
+
+<div id="result"></div>
+</div>
+
+<script>
+function calculate() {
+  let name = document.getElementById("name").value.trim();
+  let marks = ["m1","m2","m3","m4","m5"].map(id =>
+    document.getElementById(id).value
+  );
+
+  if (!name || marks.some(m => m === "" || Number(m) < 0 || Number(m) > 100)) {
+    document.getElementById("result").innerHTML =
+      "Please enter name and valid marks (0–100) in all subjects.";
+    return;
+  }
+
+  let total = marks.reduce((sum, m) => sum + Number(m), 0);
+  let percentage = total / 5;
+  let status = marks.every(m => Number(m) >= 35) ? "PASS" : "FAIL";
+
+  document.getElementById("result").innerHTML =
+    "<h3>Student Result</h3>" +
+    "Name: " + name + "<br>" +
+    "Total Marks: " + total + " / 500<br>" +
+    "Percentage: " + percentage.toFixed(2) + "%<br>" +
+    "Result: <b>" + status + "</b>";
+}
+</script>
+</body>
+</html>
